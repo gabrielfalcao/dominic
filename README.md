@@ -5,6 +5,32 @@
 
 python-pure implementation of CSS selectors, and DOM traversing
 
+# Basic usage
+
+**install**:
+
+    user@machine:~$ [sudo] pip install dominic
+
+and **play**:
+
+    from dominic import DOM
+
+    html = """<html>
+      <head>
+        <title>My Title</title>
+      </head>
+      <body>
+        <p id="main">Hello!</p>
+      </body>
+    </html>"""
+
+    dom = DOM(html)
+
+    for p in dom.find("p"):
+        assert p.text == "Hello!"
+
+    assert dom.get("p#main").text == "Hello!"
+
 # Why ?
 
 As a webdeveloper I have to handle HTML nodes within python code all
