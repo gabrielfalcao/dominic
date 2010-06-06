@@ -1,5 +1,5 @@
 # dominic
-> Version 0.1.0
+> Version 0.1 (unreleased)
 
 # What
 
@@ -21,16 +21,20 @@ and **play**:
       </head>
       <body>
         <p id="main">Hello!</p>
+        <input type="text" id="string" value="value" />
       </body>
     </html>"""
 
     dom = DOM(html)
 
     for p in dom.find("p"):
-        assert p.text == "Hello!"
+        assert p.text() == "Hello!"
 
-    assert dom.get("p#main").text == "Hello!"
+    assert dom.get("p#main").text() == "Hello!"
+    assert dom.get("p#main").html() == "<p id="main">Hello!</p>"
 
+    assert dom.get("#string").html() == "<input type="text" id="string" value="value"  />"
+    assert dom.get("#string").val() == "here comes the value"
 # Why ?
 
 As a webdeveloper I have to handle HTML nodes within python code all

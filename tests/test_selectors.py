@@ -53,3 +53,4 @@ def select_html(context):
     html = dom.get("html")
     assert that(html).is_a(Element)
     assert that(html.attribute['id']).equals("html")
+

@@ -3,4 +3,5 @@ dominic/__init__.py
 dominic.egg-info/PKG-INFO
 dominic.egg-info/SOURCES.txt
 dominic.egg-info/dependency_links.txt
+dominic.egg-info/requires.txt
 dominic.egg-info/top_level.txt
