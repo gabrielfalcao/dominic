@@ -2,11 +2,11 @@ all: check_dependencies test
 
 filename=dominic-`python -c 'import dominic;print dominic.version'`.tar.gz
 
-export PYTHONPATH:=  ${PWD}
+export PYTHONPATH:=  ${PYTHONPATH}:${PWD}
 
 check_dependencies:
 	@echo "Checking for dependencies to run tests ..."
-	@python -c "import nose" 2>/dev/null || (echo "You must install nose in order to run dominic's tests" && exit 3)
+	@python -c "import sure" 2>/dev/null || (echo "You must install sure in order to run dominic's tests" && exit 3)
 	@python -c "import xpath" 2>/dev/null || (echo "You must install py-dom-xpath in order to run dominic's tests" && exit 3)
 
 test: clean

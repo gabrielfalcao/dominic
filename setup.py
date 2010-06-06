@@ -43,5 +43,8 @@ setup(name='dominic',
     author='Gabriel Falcão',
     author_email='gabriel@nacaolivre.org',
     url='http://github.com/gabrielfalcao/dominic',
-    packages=get_packages()
+    packages=get_packages(),
+    install_requires=[
+        "py-dom-xpath"
+    ],
 )
