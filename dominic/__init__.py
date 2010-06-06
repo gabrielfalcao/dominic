@@ -33,9 +33,17 @@ class CSSSelect(object):
     def __init__(self, selector):
         self.selector = selector
 
+    def get_selector(self):
+        sel = self.selector
+        sel = self._translate_parents(sel)
+        return sel
+
+    def _translate_parents(self, selector):
+        return "//%s" % ("//".join(selector.split()))
+
     @property
     def path(self):
-        return "//" + self.selector
+        return self.get_selector()
 
 class BaseHandler(object):
     def xpath(self, path):

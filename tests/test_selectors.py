@@ -25,7 +25,6 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 from os.path import join, dirname, abspath
 from sure import that, that_with_context
-
 from dominic import DOM, Element
 
 def set_html(context):
@@ -54,3 +53,31 @@ def select_html(context):
     assert that(html).is_a(Element)
     assert that(html.attribute['id']).equals("html")
 
+@that_with_context(set_html)
+def select_body(context):
+    "dominic selecting body"
+    dom = DOM(context.html)
+
+    (body, ) = dom.find("body")
+    assert that(body).is_a(Element)
+    assert that(body.attribute['id']).equals("body")
+
+@that_with_context(set_html)
+def select_parent_element(context):
+    "dominic selecting by parent element"
+    dom = DOM(context.html)
+
+    identifiers = ["firstp", "ap", "sndp", "en", "sap", "first"]
+    paragraphs1 = dom.find("div p")
+    paragraphs2 = dom.find("body p")
+
+    assert that(dom).is_a(DOM)
+
+    assert that(paragraphs1).len_is(6)
+    assert that(paragraphs2).len_is(6)
+
+    for identifier, paragraph in zip(identifiers, paragraphs1):
+        assert that(paragraph.attribute['id']).equals(identifier)
+
+    for identifier, paragraph in zip(identifiers, paragraphs2):
+        assert that(paragraph.attribute['id']).equals(identifier)
