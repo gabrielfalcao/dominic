@@ -26,8 +26,9 @@
 
 version = '0.1-unreleased'
 
-from xml.dom import minidom
+import re
 import xpath
+from xml.dom import minidom
 
 class CSSSelect(object):
     def __init__(self, selector):
@@ -35,8 +36,30 @@ class CSSSelect(object):
 
     def get_selector(self):
         sel = self.selector
+        sel = self._translate_attrs(sel)
         sel = self._translate_parents(sel)
+        sel = self._translate_ids(sel)
+        sel = self._translate_classes(sel)
+        sel = self._put_asterisks(sel)
+
         return sel
+
+    def _put_asterisks(self, selector):
+        regex = re.compile(r'[/]{2}\[')
+        return regex.sub("//*[", selector)
+
+    def _translate_attrs(self, selector):
+        regex = re.compile(r'\[(\S+)=(\S+)\]')
+        sel = regex.sub("[@\g<1>='\g<2>']", selector)
+        return sel
+
+    def _translate_ids(self, selector):
+        regex = re.compile(r'[#](\S+)')
+        return regex.sub("[@id='\g<1>']", selector)
+
+    def _translate_classes(self, selector):
+        regex = re.compile(r'[.](\S+)')
+        return regex.sub("[contains(@class, '\g<1>')]", selector)
 
     def _translate_parents(self, selector):
         return "//%s" % ("//".join(selector.split()))

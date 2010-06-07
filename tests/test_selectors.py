@@ -23,16 +23,11 @@
 # WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
-from os.path import join, dirname, abspath
-from sure import that, that_with_context
+from sure import that
+from tests.base import with_fixture
 from dominic import DOM, Element
 
-def set_html(context):
-    fobj = open(join(abspath(dirname(__file__)), "fixtures.html"))
-    context.html = fobj.read()
-    fobj.close()
-
-@that_with_context(set_html)
+@with_fixture
 def select_paragraphs(context):
     "dominic selecting paragraphs"
     dom = DOM(context.html)
@@ -44,7 +39,7 @@ def select_paragraphs(context):
     for identifier, paragraph in zip(identifiers, paragraphs):
         assert that(paragraph.attribute['id']).equals(identifier)
 
-@that_with_context(set_html)
+@with_fixture
 def select_html(context):
     "dominic selecting html"
     dom = DOM(context.html)
@@ -53,7 +48,7 @@ def select_html(context):
     assert that(html).is_a(Element)
     assert that(html.attribute['id']).equals("html")
 
-@that_with_context(set_html)
+@with_fixture
 def select_body(context):
     "dominic selecting body"
     dom = DOM(context.html)
@@ -62,7 +57,7 @@ def select_body(context):
     assert that(body).is_a(Element)
     assert that(body.attribute['id']).equals("body")
 
-@that_with_context(set_html)
+@with_fixture
 def select_parent_element(context):
     "dominic selecting by parent element"
     dom = DOM(context.html)
@@ -81,3 +76,43 @@ def select_parent_element(context):
 
     for identifier, paragraph in zip(identifiers, paragraphs2):
         assert that(paragraph.attribute['id']).equals(identifier)
+
+@with_fixture
+def select_by_id(context):
+    "dominic selecting by id"
+    dom = DOM(context.html)
+
+    (body, ) = dom.find("#firstp")
+    assert that(body).is_a(Element)
+    assert that(body.attribute['id']).equals("firstp")
+
+@with_fixture
+def select_by_class(context):
+    "dominic selecting by class name"
+    dom = DOM(context.html)
+
+    (body, ) = dom.find(".nothiddendiv")
+    assert that(body).is_a(Element)
+    assert that(body.attribute['id']).equals("nothiddendiv")
+    assert that(body.attribute['style']).has("height:1px;")
+    assert that(body.attribute['style']).has("background:white;")
+
+@with_fixture
+def select_by_attribute_class(context):
+    "dominic selecting by attribute (class)"
+    dom = DOM(context.html)
+
+    (body, ) = dom.find("[class=nothiddendiv]")
+    assert that(body).is_a(Element)
+    assert that(body.attribute['id']).equals("nothiddendiv")
+    assert that(body.attribute['style']).has("height:1px;")
+    assert that(body.attribute['style']).has("background:white;")
+
+@with_fixture
+def select_by_attribute_id(context):
+    "dominic selecting by attribute (id)"
+    dom = DOM(context.html)
+
+    (body, ) = dom.find("[id=firstp]")
+    assert that(body).is_a(Element)
+    assert that(body.attribute['id']).equals("firstp")
