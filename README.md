@@ -7,11 +7,11 @@ python-pure implementation of CSS selectors, and DOM traversing
 
 # Basic usage
 
-**install**:
+## install:
 
     user@machine:~$ [sudo] pip install dominic
 
-and **play**:
+## documentation
 
     from dominic import DOM
 
@@ -20,21 +20,25 @@ and **play**:
         <title>My Title</title>
       </head>
       <body>
-        <p id="main">Hello!</p>
+        <p class="paragraph" id="main">Hello!</p>
         <input type="text" id="string" value="value" />
       </body>
     </html>"""
 
     dom = DOM(html)
 
-    for p in dom.find("p"):
-        assert p.text() == "Hello!"
+    p1 = for p in dom.find("p")[0]
+    p2 = for p in dom.find("p").get()
 
-    assert dom.get("p#main").text() == "Hello!"
-    assert dom.get("p#main").html() == "<p id="main">Hello!</p>"
+    p3 = for p in dom.find("#main").get()
+    p4 = for p in dom.find(".paragraph").get()
 
-    assert dom.get("#string").html() == "<input type="text" id="string" value="value"  />"
-    assert dom.get("#string").val() == "here comes the value"
+    assert p1.text() == p2.text()
+    assert p2.text() == p3.text()
+    assert p3.text() == p4.text()
+    assert p4.text() == "Hello!"
+    assert p4.html() == "<p class="paragraph" id="main">Hello!</p>"
+
 # Why ?
 
 As a webdeveloper I have to handle HTML nodes within python code all

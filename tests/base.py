@@ -26,9 +26,11 @@
 from os.path import join, dirname, abspath
 from sure import that_with_context
 
-def set_html(context):
-    fobj = open(join(abspath(dirname(__file__)), "fixtures.html"))
-    context.html = fobj.read()
-    fobj.close()
+def with_fixture(template):
+    def set_html(context):
+        fobj = open(join(abspath(dirname(__file__)), template))
+        context.html = fobj.read()
+        fobj.close()
 
-with_fixture = that_with_context(set_html)
+    return that_with_context(set_html)
+

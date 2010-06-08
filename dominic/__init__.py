@@ -36,12 +36,15 @@ class CSSSelect(object):
 
     def get_selector(self):
         sel = self.selector
+
         sel = self._translate_attrs(sel)
-        sel = self._translate_parents(sel)
         sel = self._translate_ids(sel)
         sel = self._translate_classes(sel)
-        sel = self._put_asterisks(sel)
 
+        sel = self._translate_parents(sel)
+        sel = self._put_asterisks(sel)
+        sel = self._fix_bars(sel)
+        sel = self._fix_attrs(sel)
         return sel
 
     def _put_asterisks(self, selector):
@@ -58,11 +61,19 @@ class CSSSelect(object):
         return regex.sub("[@id='\g<1>']", selector)
 
     def _translate_classes(self, selector):
-        regex = re.compile(r'[.](\S+)')
-        return regex.sub("[contains(@class, '\g<1>')]", selector)
+        regex = re.compile(r'[.]([^ \[]+)')
+        sel = regex.sub("[contains(@class, '\g<1>')]", selector)
+        return sel
 
     def _translate_parents(self, selector):
         return "//%s" % ("//".join(selector.split()))
+
+    def _fix_bars(self, selector):
+        return selector.replace("//'", "'")
+
+    def _fix_attrs(self, selector):
+        sel = selector.replace("][", " and ")
+        return sel
 
     @property
     def path(self):
@@ -71,7 +82,7 @@ class CSSSelect(object):
 class BaseHandler(object):
     def xpath(self, path):
         finder = xpath.XPath(path)
-        return map(Element, finder.find(self.document))
+        return ElementSet(finder.find(self.document))
 
     def find(self, selector):
         xpather = CSSSelect(selector)
@@ -80,10 +91,26 @@ class BaseHandler(object):
     def get(self, selector):
         return self.find(selector)[0]
 
+class ElementSet(list):
+    def __init__(self, items):
+        super(ElementSet, self).__init__(map(Element, items))
+
+    def get(self):
+        return self[0]
+
 class Element(BaseHandler):
     def __init__(self, element):
         self.element = element
         self.attribute = self._fetch_attributes(element)
+        self.tag = element.tagName
+
+    def text(self):
+        only_text = lambda x: hasattr(x, 'wholeText')
+        get_text = lambda x: x.wholeText
+        return " ".join(map(get_text, filter(only_text, self.element.childNodes)))
+
+    def html(self):
+        return self.element.toxml()
 
     def _fetch_attributes(self, element):
         keys = element.attributes.keys()
