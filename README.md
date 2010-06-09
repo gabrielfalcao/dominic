@@ -78,6 +78,16 @@ easy-to-understand test suite.
 thanks to [py-dom-xpath](http://code.google.com/p/py-dom-xpath/) crew,
 it rocks out loud!
 
+# contribute!
+
+**install dependencies**
+
+    user@machine:~$ [sudo] pip install sure
+
+**run tests**
+
+    user@machine:~Projects/dominic$ make test
+
 # license
 
 dominic is under MIT license, so that it can be embedded into your
