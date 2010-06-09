@@ -22,6 +22,9 @@ python-pure implementation of CSS selectors, and DOM traversing
       <body>
         <p class="paragraph" id="main">Hello!</p>
         <input type="text" id="string" value="value" />
+        <div class="one two three">
+          <span id="the-span">text here!</span>
+        </div>
       </body>
     </html>"""
 
@@ -38,6 +41,10 @@ python-pure implementation of CSS selectors, and DOM traversing
     assert p3.text() == p4.text()
     assert p4.text() == "Hello!"
     assert p4.html() == "<p class="paragraph" id="main">Hello!</p>"
+
+    span = dom.find("div.one.two.three > span#the-span").get()
+
+    assert span.text() == 'text here!'
 
 # Why ?
 

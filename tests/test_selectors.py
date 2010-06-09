@@ -97,6 +97,16 @@ def select_by_class(context):
     assert that(body.attribute['style']).has("height:1px;")
     assert that(body.attribute['style']).has("background:white;")
 
+@with_fixture("divs.html")
+def select_by_class_with_many_classes(context):
+    "dominic selecting by many classes at once"
+    dom = DOM(context.html)
+
+    elements = dom.find("li.stuff.thing")
+    assert that(elements).the_attribute('tag').equals('li')
+
+    assert that(elements[0].attribute['id']).equals('house')
+
 @with_fixture("fixtures.html")
 def select_by_attribute_class(context):
     "dominic selecting by attribute (class)"
@@ -165,3 +175,42 @@ def select_by_class_and_attribute_selector(context):
         assert that(body).is_a(Element)
         assert that(body.attribute['id']).equals("nothiddendiv")
 
+@with_fixture("fixtures.html")
+def select_by_id_and_attribute_selector(context):
+    "dominic selecting by id"
+    dom = DOM(context.html)
+
+    possibilities = [
+        "#nothiddendiv[id=nothiddendiv]",
+        "[id=nothiddendiv]#nothiddendiv",
+    ]
+    for selector in possibilities:
+        (body, ) = dom.find(selector)
+        assert that(body).is_a(Element)
+        assert that(body.attribute['id']).equals("nothiddendiv")
+
+@with_fixture("divs.html")
+def select_by_child(context):
+    "dominic selecting by parent > child, mixing many kinds of selectors"
+    dom = DOM(context.html)
+
+    elements = dom.find(
+        "ul#objects > li.geometry"
+    )
+    assert that(elements).the_attribute('tag').equals('li')
+
+    assert that(elements[0].attribute['id']).equals('ball')
+    assert that(elements[1].attribute['id']).equals('square')
+
+@with_fixture("divs.html")
+def select_by_child_complex(context):
+    "dominic selecting by parent > child, mixing many kinds of selectors"
+    dom = DOM(context.html)
+
+    elements = dom.find(
+        "div.ball.dog.square.house.puppet#like-this-one > ul#objects > li.geometry"
+    )
+    assert that(elements).the_attribute('tag').equals('li')
+
+    assert that(elements[0].attribute['id']).equals('ball')
+    assert that(elements[1].attribute['id']).equals('square')

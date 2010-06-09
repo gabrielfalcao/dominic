@@ -45,6 +45,7 @@ class CSSSelect(object):
         sel = self._put_asterisks(sel)
         sel = self._fix_bars(sel)
         sel = self._fix_attrs(sel)
+        sel = self._fix_direct_childs(sel)
         return sel
 
     def _put_asterisks(self, selector):
@@ -57,11 +58,11 @@ class CSSSelect(object):
         return sel
 
     def _translate_ids(self, selector):
-        regex = re.compile(r'[#](\S+)')
+        regex = re.compile(r'[#]([^ \[]+)')
         return regex.sub("[@id='\g<1>']", selector)
 
     def _translate_classes(self, selector):
-        regex = re.compile(r'[.]([^ \[]+)')
+        regex = re.compile(r'[.]([^ .\[]+)')
         sel = regex.sub("[contains(@class, '\g<1>')]", selector)
         return sel
 
@@ -73,6 +74,10 @@ class CSSSelect(object):
 
     def _fix_attrs(self, selector):
         sel = selector.replace("][", " and ")
+        return sel
+
+    def _fix_direct_childs(self, selector):
+        sel = selector.replace("//>//", "/")
         return sel
 
     @property
