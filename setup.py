@@ -40,7 +40,7 @@ def get_packages():
 setup(name='dominic',
     version=version,
     description='python-pure implementation of CSS Selectors',
-    author='Gabriel Falcão',
+    author=u'Gabriel Falcão',
     author_email='gabriel@nacaolivre.org',
     url='http://github.com/gabrielfalcao/dominic',
     packages=get_packages(),
