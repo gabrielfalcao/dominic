@@ -53,7 +53,7 @@ def select_body(context):
     "dominic selecting body"
     dom = DOM(context.html)
 
-    (body, ) = dom.find("body")
+    body = dom.find("body").get()
     assert that(body).is_a(Element)
     assert that(body.attribute['id']).equals("body")
 
@@ -82,7 +82,7 @@ def select_by_id(context):
     "dominic selecting by id"
     dom = DOM(context.html)
 
-    (body, ) = dom.find("#firstp")
+    body = dom.find("#firstp").get()
     assert that(body).is_a(Element)
     assert that(body.attribute['id']).equals("firstp")
 
@@ -91,11 +91,11 @@ def select_by_class(context):
     "dominic selecting by class name"
     dom = DOM(context.html)
 
-    (body, ) = dom.find(".nothiddendiv")
-    assert that(body).is_a(Element)
-    assert that(body.attribute['id']).equals("nothiddendiv")
-    assert that(body.attribute['style']).has("height:1px;")
-    assert that(body.attribute['style']).has("background:white;")
+    div = dom.find(".nothiddendiv").get()
+    assert that(div).is_a(Element)
+    assert that(div.attribute['id']).equals("nothiddendiv")
+    assert that(div.attribute['style']).has("height:1px;")
+    assert that(div.attribute['style']).has("background:white;")
 
 @with_fixture("divs.html")
 def select_by_class_with_many_classes(context):
@@ -112,11 +112,11 @@ def select_by_attribute_class(context):
     "dominic selecting by attribute (class)"
     dom = DOM(context.html)
 
-    (body, ) = dom.find("[class=nothiddendiv]")
-    assert that(body).is_a(Element)
-    assert that(body.attribute['id']).equals("nothiddendiv")
-    assert that(body.attribute['style']).has("height:1px;")
-    assert that(body.attribute['style']).has("background:white;")
+    div = dom.find("[class=nothiddendiv]").get()
+    assert that(div).is_a(Element)
+    assert that(div.attribute['id']).equals("nothiddendiv")
+    assert that(div.attribute['style']).has("height:1px;")
+    assert that(div.attribute['style']).has("background:white;")
 
 @with_fixture("fixtures.html")
 def select_by_attribute_id(context):
@@ -145,8 +145,7 @@ def select_all(context):
     assert that(elements[5].tag).equals('p')
     assert that(elements[6].tag).equals('div')
     assert that(elements[7].tag).equals('ul')
-    assert that(elements, within_range=(8, 12)). \
-        the_attribute('tag').equals('li')
+    assert that(elements, within_range=(8, 12)).the_attribute('tag').equals('li')
 
 @with_fixture("divs.html")
 def select_all_childs_of_some(context):
@@ -171,9 +170,9 @@ def select_by_class_and_attribute_selector(context):
         "[class=nothiddendiv].nothiddendiv",
     ]
     for selector in possibilities:
-        (body, ) = dom.find(selector)
-        assert that(body).is_a(Element)
-        assert that(body.attribute['id']).equals("nothiddendiv")
+        div = dom.find(selector).get()
+        assert that(div).is_a(Element)
+        assert that(div.attribute['id']).equals("nothiddendiv")
 
 @with_fixture("fixtures.html")
 def select_by_id_and_attribute_selector(context):
@@ -185,7 +184,7 @@ def select_by_id_and_attribute_selector(context):
         "[id=nothiddendiv]#nothiddendiv",
     ]
     for selector in possibilities:
-        (body, ) = dom.find(selector)
+        body = dom.find(selector).get()
         assert that(body).is_a(Element)
         assert that(body.attribute['id']).equals("nothiddendiv")
 

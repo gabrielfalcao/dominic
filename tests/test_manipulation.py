@@ -32,7 +32,7 @@ def text_return_the_text_within_element(context):
     "Element().text() returns the text content"
     dom = DOM(context.html)
 
-    (p, ) = dom.find("#the-only-paragraph")
+    p = dom.find("#the-only-paragraph").get()
 
     assert that(p.text()).equals("the only one in th whole damn thing!?")
 
@@ -41,7 +41,7 @@ def html_return_the_html_string(context):
     "Element().html() returns the html string"
     dom = DOM(context.html)
 
-    (p, ) = dom.find("#the-only-paragraph")
+    p = dom.find("#the-only-paragraph").get()
 
     assert that(p.html()).equals(
         '<p id="the-only-paragraph">the only one in th whole damn thing!?</p>'
