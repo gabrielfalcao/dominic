@@ -67,10 +67,10 @@ def select_parent_element(context):
 
     assert that(dom).is_a(DOM)
 
-    assert that(paragraphs1).len_is(6)
+    assert paragraphs1.length is 6
     assert that(paragraphs1).in_each("attribute['id']").matches(identifiers)
 
-    assert that(paragraphs2).len_is(6)
+    assert paragraphs2.length is 6
     assert that(paragraphs2).in_each("attribute['id']").matches(identifiers)
 
 @with_fixture("fixtures.html")
@@ -130,7 +130,7 @@ def select_all(context):
 
     elements = dom.find("*")
 
-    assert that(elements).len_is(13)
+    assert elements.length is 13
 
     assert that(elements[0].tag).equals('html')
     assert that(elements[1].tag).equals('head')
