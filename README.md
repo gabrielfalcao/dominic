@@ -46,6 +46,24 @@ python-pure implementation of CSS selectors, and DOM traversing
 
     assert span.text() == 'text here!'
 
+    assert span.text('reflect changes')
+
+    assert span.text() == 'reflect changes'
+    assert span.html() == '<span id="the-span">reflect changes</span>'
+
+    assert dom.html() == """<html>
+      <head>
+        <title>My Title</title>
+      </head>
+      <body>
+        <p class="paragraph" id="main">Hello!</p>
+        <input type="text" id="string" value="value" />
+        <div class="one two three">
+          <span id="the-span">reflect changes</span>
+        </div>
+      </body>
+    </html>"""
+
 # Why ?
 
 As a webdeveloper I have to handle HTML nodes within python code all

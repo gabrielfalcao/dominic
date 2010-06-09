@@ -87,7 +87,7 @@ class CSSSelect(object):
 class BaseHandler(object):
     def xpath(self, path):
         finder = xpath.XPath(path)
-        return ElementSet(finder.find(self.document))
+        return ElementSet(finder.find(self.element))
 
     def find(self, selector):
         xpather = CSSSelect(selector)
@@ -95,6 +95,32 @@ class BaseHandler(object):
 
     def get(self, selector):
         return self.find(selector)[0]
+
+    def _get_element_text(self):
+        ret = self.element.childNodes[0].wholeText
+        return ret.encode('utf-8')
+
+    def text(self, new=None):
+        if isinstance(new, basestring):
+            self.element.childNodes[0].replaceWholeText(new)
+
+        return self._get_element_text()
+
+    def html(self, new=None):
+        if isinstance(new, basestring):
+            while self.element.childNodes:
+                self.element.childNodes.pop()
+
+            html = minidom.parseString(new)
+            node = html.childNodes[0]
+            self.element.parentNode.replaceChild(node, self.element)
+            self.element = node
+
+        return self.element.toxml()
+
+    def _fetch_attributes(self, element):
+        keys = element.attributes.keys()
+        return dict([(k, element.getAttribute(k)) for k in keys])
 
 class ElementSet(list):
     def __init__(self, items):
@@ -112,19 +138,8 @@ class Element(BaseHandler):
         self.attribute = self._fetch_attributes(element)
         self.tag = element.tagName
 
-    def text(self):
-        only_text = lambda x: hasattr(x, 'wholeText')
-        get_text = lambda x: x.wholeText
-        return " ".join(map(get_text, filter(only_text, self.element.childNodes)))
-
-    def html(self):
-        return self.element.toxml()
-
-    def _fetch_attributes(self, element):
-        keys = element.attributes.keys()
-        return dict([(k, element.getAttribute(k)) for k in keys])
-
 class DOM(BaseHandler):
     def __init__(self, raw):
         self.raw = raw
         self.document = minidom.parseString(raw)
+        self.element = self.document.childNodes[0]

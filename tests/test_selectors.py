@@ -29,7 +29,7 @@ from dominic import DOM, Element
 
 @with_fixture("fixtures.html")
 def select_paragraphs(context):
-    "dominic selecting paragraphs"
+    "selecting paragraphs"
     dom = DOM(context.html)
 
     identifiers = ["firstp", "ap", "sndp", "en", "sap", "first"]
@@ -40,7 +40,7 @@ def select_paragraphs(context):
 
 @with_fixture("fixtures.html")
 def select_html(context):
-    "dominic selecting html"
+    "selecting html"
     dom = DOM(context.html)
 
     html = dom.get("html")
@@ -49,7 +49,7 @@ def select_html(context):
 
 @with_fixture("fixtures.html")
 def select_body(context):
-    "dominic selecting body"
+    "selecting body"
     dom = DOM(context.html)
 
     body = dom.find("body").first()
@@ -58,7 +58,7 @@ def select_body(context):
 
 @with_fixture("fixtures.html")
 def select_parent_element(context):
-    "dominic selecting by parent element"
+    "selecting by parent element"
     dom = DOM(context.html)
 
     identifiers = ["firstp", "ap", "sndp", "en", "sap", "first"]
@@ -75,7 +75,7 @@ def select_parent_element(context):
 
 @with_fixture("fixtures.html")
 def select_by_id(context):
-    "dominic selecting by id"
+    "selecting by id"
     dom = DOM(context.html)
 
     body = dom.find("#firstp").first()
@@ -84,7 +84,7 @@ def select_by_id(context):
 
 @with_fixture("fixtures.html")
 def select_by_class(context):
-    "dominic selecting by class name"
+    "selecting by class name"
     dom = DOM(context.html)
 
     div = dom.find(".nothiddendiv").first()
@@ -95,7 +95,7 @@ def select_by_class(context):
 
 @with_fixture("divs.html")
 def select_by_class_with_many_classes(context):
-    "dominic selecting by many classes at once"
+    "selecting by many classes at once"
     dom = DOM(context.html)
 
     elements = dom.find("li.stuff.thing")
@@ -105,7 +105,7 @@ def select_by_class_with_many_classes(context):
 
 @with_fixture("fixtures.html")
 def select_by_attribute_class(context):
-    "dominic selecting by attribute (class)"
+    "selecting by attribute (class)"
     dom = DOM(context.html)
 
     div = dom.find("[class=nothiddendiv]").first()
@@ -116,7 +116,7 @@ def select_by_attribute_class(context):
 
 @with_fixture("fixtures.html")
 def select_by_attribute_id(context):
-    "dominic selecting by attribute (id)"
+    "selecting by attribute (id)"
     dom = DOM(context.html)
 
     (body, ) = dom.find("[id=firstp]")
@@ -125,7 +125,7 @@ def select_by_attribute_id(context):
 
 @with_fixture("divs.html")
 def select_all(context):
-    "dominic selecting all *"
+    "selecting all *"
     dom = DOM(context.html)
 
     elements = dom.find("*")
@@ -145,7 +145,7 @@ def select_all(context):
 
 @with_fixture("divs.html")
 def select_all_childs_of_some(context):
-    "dominic selecting all childs of some element"
+    "selecting all childs of some element"
     dom = DOM(context.html)
 
     elements = dom.find("#objects *")
@@ -158,7 +158,7 @@ def select_all_childs_of_some(context):
 
 @with_fixture("fixtures.html")
 def select_by_class_and_attribute_selector(context):
-    "dominic selecting by class name"
+    "selecting by class name"
     dom = DOM(context.html)
 
     possibilities = [
@@ -172,7 +172,7 @@ def select_by_class_and_attribute_selector(context):
 
 @with_fixture("fixtures.html")
 def select_by_id_and_attribute_selector(context):
-    "dominic selecting by id"
+    "selecting by id"
     dom = DOM(context.html)
 
     possibilities = [
@@ -186,7 +186,7 @@ def select_by_id_and_attribute_selector(context):
 
 @with_fixture("divs.html")
 def select_by_child(context):
-    "dominic selecting by parent > child, mixing many kinds of selectors"
+    "selecting by parent > child, mixing many kinds of selectors"
     dom = DOM(context.html)
 
     elements = dom.find(
@@ -197,7 +197,7 @@ def select_by_child(context):
 
 @with_fixture("divs.html")
 def select_by_child_complex(context):
-    "dominic selecting by parent > child, mixing many kinds of selectors"
+    "selecting by parent > child, mixing many kinds of selectors"
     dom = DOM(context.html)
 
     elements = dom.find(
