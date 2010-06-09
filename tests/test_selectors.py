@@ -180,9 +180,9 @@ def select_by_id_and_attribute_selector(context):
         "[id=nothiddendiv]#nothiddendiv",
     ]
     for selector in possibilities:
-        body = dom.find(selector).get()
-        assert that(body).is_a(Element)
-        assert that(body.attribute['id']).equals("nothiddendiv")
+        div = dom.find(selector).get()
+        assert that(div).is_a(Element)
+        assert that(div.attribute['id']).equals("nothiddendiv")
 
 @with_fixture("divs.html")
 def select_by_child(context):
