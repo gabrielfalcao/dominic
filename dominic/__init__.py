@@ -24,7 +24,7 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-version = '0.1-unreleased'
+version = '0.1.3-unreleased'
 
 import xpath
 from xml.dom import minidom
