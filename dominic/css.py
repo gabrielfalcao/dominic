@@ -32,20 +32,23 @@ class XPathTranslator(object):
     def get_selector(self):
         sel = self.selector
 
+        sel = self.do_translations(sel)
+        sel = self.do_fixes(sel)
+        return sel
+
+    def do_translations(self, sel):
         sel = self._translate_attrs(sel)
         sel = self._translate_ids(sel)
         sel = self._translate_classes(sel)
-
         sel = self._translate_parents(sel)
-        sel = self._put_asterisks(sel)
+        return sel
+
+    def do_fixes(self, sel):
+        sel = self._fix_asterisks(sel)
         sel = self._fix_bars(sel)
         sel = self._fix_attrs(sel)
         sel = self._fix_direct_childs(sel)
         return sel
-
-    def _put_asterisks(self, selector):
-        regex = re.compile(r'[/]{2}\[')
-        return regex.sub("//*[", selector)
 
     def _translate_attrs(self, selector):
         regex = re.compile(r'\[(\S+)=(\S+)\]')
@@ -63,6 +66,10 @@ class XPathTranslator(object):
 
     def _translate_parents(self, selector):
         return "//%s" % ("//".join(selector.split()))
+
+    def _fix_asterisks(self, selector):
+        regex = re.compile(r'[/]{2}\[')
+        return regex.sub("//*[", selector)
 
     def _fix_bars(self, selector):
         return selector.replace("//'", "'")
