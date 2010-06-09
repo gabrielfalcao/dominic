@@ -52,9 +52,23 @@ def first_returns_the_first(context):
     "dominic selecting all childs of some element"
     dom = DOM(context.html)
 
-    elements = dom.find("#the-only-paragraph")
+    elements = dom.find("#objects li")
 
     p = elements.first()
     assert that(p).is_a(Element)
-    assert that(p.tag).equals("p")
-    assert that(p.text()).equals("the only one in th whole damn thing!?")
+    assert that(p.tag).equals("li")
+    assert that(p.attribute['id']).equals("ball")
+    assert that(p.text()).equals("to kick")
+
+@with_fixture("divs.html")
+def last_returns_the_last(context):
+    "dominic selecting all childs of some element"
+    dom = DOM(context.html)
+
+    elements = dom.find("#objects li")
+
+    p = elements.last()
+    assert that(p).is_a(Element)
+    assert that(p.tag).equals("li")
+    assert that(p.attribute['id']).equals("puppet")
+    assert that(p.text()).equals("to care with")

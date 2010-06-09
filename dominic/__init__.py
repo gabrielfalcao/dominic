@@ -103,6 +103,9 @@ class ElementSet(list):
     def first(self):
         return self[0]
 
+    def last(self):
+        return self[-1]
+
 class Element(BaseHandler):
     def __init__(self, element):
         self.element = element
