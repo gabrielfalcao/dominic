@@ -30,6 +30,10 @@ python-pure implementation of CSS selectors, and DOM traversing
 
     dom = DOM(html)
 
+    body_elements = dom.find("body *")
+
+    assert body_elements.length is 4
+
     p1 = for p in dom.find("p")[0]
     p2 = for p in dom.find("p").get()
 

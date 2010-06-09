@@ -78,6 +78,10 @@ class ElementSet(list):
     def last(self):
         return self[-1]
 
+    @property
+    def length(self):
+        return len(self)
+
 class Element(BaseHandler):
     def __init__(self, element):
         self.element = element
