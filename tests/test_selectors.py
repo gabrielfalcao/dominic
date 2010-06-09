@@ -52,7 +52,7 @@ def select_body(context):
     "dominic selecting body"
     dom = DOM(context.html)
 
-    body = dom.find("body").get()
+    body = dom.find("body").first()
     assert that(body).is_a(Element)
     assert that(body.attribute['id']).equals("body")
 
@@ -78,7 +78,7 @@ def select_by_id(context):
     "dominic selecting by id"
     dom = DOM(context.html)
 
-    body = dom.find("#firstp").get()
+    body = dom.find("#firstp").first()
     assert that(body).is_a(Element)
     assert that(body.attribute['id']).equals("firstp")
 
@@ -87,7 +87,7 @@ def select_by_class(context):
     "dominic selecting by class name"
     dom = DOM(context.html)
 
-    div = dom.find(".nothiddendiv").get()
+    div = dom.find(".nothiddendiv").first()
     assert that(div).is_a(Element)
     assert that(div.attribute['id']).equals("nothiddendiv")
     assert that(div.attribute['style']).has("height:1px;")
@@ -108,7 +108,7 @@ def select_by_attribute_class(context):
     "dominic selecting by attribute (class)"
     dom = DOM(context.html)
 
-    div = dom.find("[class=nothiddendiv]").get()
+    div = dom.find("[class=nothiddendiv]").first()
     assert that(div).is_a(Element)
     assert that(div.attribute['id']).equals("nothiddendiv")
     assert that(div.attribute['style']).has("height:1px;")
@@ -166,7 +166,7 @@ def select_by_class_and_attribute_selector(context):
         "[class=nothiddendiv].nothiddendiv",
     ]
     for selector in possibilities:
-        div = dom.find(selector).get()
+        div = dom.find(selector).first()
         assert that(div).is_a(Element)
         assert that(div.attribute['id']).equals("nothiddendiv")
 
@@ -180,7 +180,7 @@ def select_by_id_and_attribute_selector(context):
         "[id=nothiddendiv]#nothiddendiv",
     ]
     for selector in possibilities:
-        div = dom.find(selector).get()
+        div = dom.find(selector).first()
         assert that(div).is_a(Element)
         assert that(div.attribute['id']).equals("nothiddendiv")
 

@@ -100,7 +100,7 @@ class ElementSet(list):
     def __init__(self, items):
         super(ElementSet, self).__init__(map(Element, items))
 
-    def get(self):
+    def first(self):
         return self[0]
 
 class Element(BaseHandler):

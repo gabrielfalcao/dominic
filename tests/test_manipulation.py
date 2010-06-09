@@ -32,7 +32,7 @@ def text_return_the_text_within_element(context):
     "Element().text() returns the text content"
     dom = DOM(context.html)
 
-    p = dom.find("#the-only-paragraph").get()
+    p = dom.find("#the-only-paragraph").first()
 
     assert that(p.text()).equals("the only one in th whole damn thing!?")
 
@@ -41,20 +41,20 @@ def html_return_the_html_string(context):
     "Element().html() returns the html string"
     dom = DOM(context.html)
 
-    p = dom.find("#the-only-paragraph").get()
+    p = dom.find("#the-only-paragraph").first()
 
     assert that(p.html()).equals(
         '<p id="the-only-paragraph">the only one in th whole damn thing!?</p>'
     )
 
 @with_fixture("divs.html")
-def get_returns_the_first(context):
+def first_returns_the_first(context):
     "dominic selecting all childs of some element"
     dom = DOM(context.html)
 
     elements = dom.find("#the-only-paragraph")
 
-    p = elements.get()
+    p = elements.first()
     assert that(p).is_a(Element)
     assert that(p.tag).equals("p")
     assert that(p.text()).equals("the only one in th whole damn thing!?")
