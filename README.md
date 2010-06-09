@@ -35,10 +35,10 @@ python-pure implementation of CSS selectors, and DOM traversing
     assert body_elements.length is 4
 
     p1 = for p in dom.find("p")[0]
-    p2 = for p in dom.find("p").get()
+    p2 = for p in dom.find("p").first()
 
-    p3 = for p in dom.find("#main").get()
-    p4 = for p in dom.find(".paragraph").get()
+    p3 = for p in dom.find("#main").first()
+    p4 = for p in dom.find(".paragraph").first()
 
     assert p1.text() == p2.text()
     assert p2.text() == p3.text()
@@ -46,7 +46,7 @@ python-pure implementation of CSS selectors, and DOM traversing
     assert p4.text() == "Hello!"
     assert p4.html() == "<p class="paragraph" id="main">Hello!</p>"
 
-    span = dom.find("div.one.two.three > span#the-span").get()
+    span = dom.find("div.one.two.three > span#the-span").first()
 
     assert span.text() == 'text here!'
 

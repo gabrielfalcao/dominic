@@ -1,5 +1,6 @@
 setup.py
 dominic/__init__.py
+dominic/css.py
 dominic.egg-info/PKG-INFO
 dominic.egg-info/SOURCES.txt
 dominic.egg-info/dependency_links.txt
