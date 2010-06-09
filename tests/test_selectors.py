@@ -36,8 +36,7 @@ def select_paragraphs(context):
     paragraphs = dom.find("p")
 
     assert that(dom).is_a(DOM)
-    for identifier, paragraph in zip(identifiers, paragraphs):
-        assert that(paragraph.attribute['id']).equals(identifier)
+    assert that(paragraphs).in_each("attribute['id']").matches(identifiers)
 
 @with_fixture("fixtures.html")
 def select_html(context):
@@ -69,13 +68,10 @@ def select_parent_element(context):
     assert that(dom).is_a(DOM)
 
     assert that(paragraphs1).len_is(6)
+    assert that(paragraphs1).in_each("attribute['id']").matches(identifiers)
+
     assert that(paragraphs2).len_is(6)
-
-    for identifier, paragraph in zip(identifiers, paragraphs1):
-        assert that(paragraph.attribute['id']).equals(identifier)
-
-    for identifier, paragraph in zip(identifiers, paragraphs2):
-        assert that(paragraph.attribute['id']).equals(identifier)
+    assert that(paragraphs2).in_each("attribute['id']").matches(identifiers)
 
 @with_fixture("fixtures.html")
 def select_by_id(context):
@@ -196,10 +192,8 @@ def select_by_child(context):
     elements = dom.find(
         "ul#objects > li.geometry"
     )
-    assert that(elements).the_attribute('tag').equals('li')
-
-    assert that(elements[0].attribute['id']).equals('ball')
-    assert that(elements[1].attribute['id']).equals('square')
+    assert that(elements).in_each('tag').matches(['li', 'li'])
+    assert that(elements).in_each("attribute['id']").matches(['ball', 'square'])
 
 @with_fixture("divs.html")
 def select_by_child_complex(context):
@@ -209,7 +203,5 @@ def select_by_child_complex(context):
     elements = dom.find(
         "div.ball.dog.square.house.puppet#like-this-one > ul#objects > li.geometry"
     )
-    assert that(elements).the_attribute('tag').equals('li')
-
-    assert that(elements[0].attribute['id']).equals('ball')
-    assert that(elements[1].attribute['id']).equals('square')
+    assert that(elements).in_each('tag').matches(['li', 'li'])
+    assert that(elements).in_each("attribute['id']").matches(['ball', 'square'])
