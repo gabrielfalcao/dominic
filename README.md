@@ -76,6 +76,7 @@ python-pure implementation of CSS selectors, and DOM traversing
         <ul>
           <li id="nice-ball">kicks</li>
           <li id="nice-star">sparks</li>
+          <li id=almost-nice-moon">so beautiful</li>
           <li id="awful-ball">that does not kick</li>
           <li id="awful-star">that has no light</li>
         </ul>
@@ -88,6 +89,12 @@ python-pure implementation of CSS selectors, and DOM traversing
 
     assert ball.text() == 'kicks'
     assert star.text() == 'sparks'
+
+    ball, star, moon = lists_dom.find("ul > [id*=nice]")
+
+    assert ball.text() == 'kicks'
+    assert star.text() == 'sparks'
+    assert moon.text() == 'so beautiful'
 
 ## also works with quoted attribute values
 

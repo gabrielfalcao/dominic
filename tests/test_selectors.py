@@ -236,11 +236,41 @@ def select_by_child_complex(context):
     assert that(elements).in_each("attribute['id']").matches(['ball', 'square'])
 
 @with_fixture("lists.html")
+def select_by_attribute_startswith(context):
+    "selecting attribute that startswith certain value"
+    dom = DOM(context.html)
+
+    elements = dom.find("ul#packages > li[id|=python]")
+
+    assert that(elements).in_each("attribute['id']").matches(
+        [
+            'python-django',
+            'python-sponge',
+            'python-lettuce',
+        ]
+    )
+
+@with_fixture("lists.html")
+def select_by_attribute_startswith_with_quotes(context):
+    "selecting attribute that startswith certain value with quotes"
+    dom = DOM(context.html)
+
+    elements = dom.find("ul#packages > li[id|=\"python\"]")
+
+    assert that(elements).in_each("attribute['id']").matches(
+        [
+            'python-django',
+            'python-sponge',
+            'python-lettuce',
+        ]
+    )
+
+@with_fixture("lists.html")
 def select_by_attribute_contains(context):
     "selecting attribute that contains certain value"
     dom = DOM(context.html)
 
-    elements = dom.find("ul#packages > li[id|=python]")
+    elements = dom.find("ul#packages > li[id*=python]")
 
     assert that(elements).in_each("attribute['id']").matches(
         [
@@ -256,7 +286,7 @@ def select_by_attribute_contains_with_quotes(context):
     "selecting attribute that contains certain value with quotes"
     dom = DOM(context.html)
 
-    elements = dom.find("ul#packages > li[id|=\"python\"]")
+    elements = dom.find("ul#packages > li[id*=\"python\"]")
 
     assert that(elements).in_each("attribute['id']").matches(
         [
