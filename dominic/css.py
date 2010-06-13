@@ -37,6 +37,7 @@ class XPathTranslator(object):
         return sel
 
     def do_translations(self, sel):
+        sel = self._translate_contains_word(sel)
         sel = self._translate_attrs(sel)
         sel = self._translate_ids(sel)
         sel = self._translate_classes(sel)
@@ -50,6 +51,12 @@ class XPathTranslator(object):
         sel = self._fix_direct_childs(sel)
         sel = self._fix_attr_startswith(sel)
         sel = self._fix_attr_contains(sel)
+        sel = self._fix_attr_or(sel)
+        return sel
+
+    def _translate_contains_word(self, selector):
+        regex = re.compile(r'\[([^\s~]+)[~]=(\S+)\]')
+        sel = regex.sub("[@\g<1>='\g<2>' or contains(@\g<1>, '\g<2> ') or contains(@\g<1>, ' \g<2>')]", selector)
         return sel
 
     def _translate_attrs(self, selector):
@@ -93,6 +100,9 @@ class XPathTranslator(object):
         regex = re.compile(r"([@]\w+)[*]='(.*)'")
         sel = regex.sub("contains(\g<1>, '\g<2>')", selector)
         return sel
+
+    def _fix_attr_or(self, selector):
+        return selector.replace('//or//', ' or ')
 
     @property
     def path(self):

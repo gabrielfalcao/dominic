@@ -297,3 +297,19 @@ def select_by_attribute_contains_with_quotes(context):
         ]
     )
 
+@with_fixture("lists.html")
+def select_by_attribute_contains_word(context):
+    "selecting attribute that contains certain word"
+    dom = DOM(context.html)
+
+    elements = dom.find("ul#packages > li[id~=java]")
+
+    assert that(elements).in_each("attribute['id']").matches(
+        [
+            'java',
+            'java island',
+            'coffee java',
+            'csharp java php',
+        ]
+    )
+

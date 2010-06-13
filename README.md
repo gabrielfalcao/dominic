@@ -108,6 +108,9 @@ python-pure implementation of CSS selectors, and DOM traversing
           <li id="nice-star">sparks</li>
           <li id="awful-ball">that does not kick</li>
           <li id="awful-star">that has no light</li>
+          <li id="capitalized word">Word</li>
+          <li id=lower word case">word</li>
+          <li id=word upper cased">WORD</li>
         </ul>
       </body>
     </html>"""
@@ -118,6 +121,13 @@ python-pure implementation of CSS selectors, and DOM traversing
 
     assert ball.text() == 'kicks'
     assert star.text() == 'sparks'
+
+    words = lists_dom.find('ul > [id~="word"]')
+
+    assert len(words) is 3
+    assert words[0].text() == 'Word'
+    assert words[1].text() == 'word'
+    assert words[2].text() == 'WORD'
 
 # Why ?
 
