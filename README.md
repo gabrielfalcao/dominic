@@ -89,6 +89,29 @@ python-pure implementation of CSS selectors, and DOM traversing
     assert ball.text() == 'kicks'
     assert star.text() == 'sparks'
 
+## also works with quoted attribute values
+
+    lists_html = """<html>
+      <head>
+        <title>My Lists</title>
+      </head>
+      <body>
+        <ul>
+          <li id="nice-ball">kicks</li>
+          <li id="nice-star">sparks</li>
+          <li id="awful-ball">that does not kick</li>
+          <li id="awful-star">that has no light</li>
+        </ul>
+      </body>
+    </html>"""
+
+    lists_dom = DOM(lists_html)
+
+    ball, star = lists_dom.find('ul > [id|="nice"]')
+
+    assert ball.text() == 'kicks'
+    assert star.text() == 'sparks'
+
 # Why ?
 
 As a webdeveloper I have to handle HTML nodes within python code all

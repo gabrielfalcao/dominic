@@ -171,6 +171,21 @@ def select_by_class_and_attribute_selector(context):
         assert that(div.attribute['id']).equals("nothiddendiv")
 
 @with_fixture("fixtures.html")
+def select_by_class_and_attribute_selector_with_quotes(context):
+    "selecting by class name with quotes"
+    dom = DOM(context.html)
+
+    possibilities = [
+        '.nothiddendiv[class="nothiddendiv"]',
+        '[class="nothiddendiv"].nothiddendiv',
+    ]
+
+    for selector in possibilities:
+        div = dom.find(selector).first()
+        assert that(div).is_a(Element)
+        assert that(div.attribute['id']).equals("nothiddendiv")
+
+@with_fixture("fixtures.html")
 def select_by_id_and_attribute_selector(context):
     "selecting by id"
     dom = DOM(context.html)
@@ -178,6 +193,20 @@ def select_by_id_and_attribute_selector(context):
     possibilities = [
         "#nothiddendiv[id=nothiddendiv]",
         "[id=nothiddendiv]#nothiddendiv",
+    ]
+    for selector in possibilities:
+        div = dom.find(selector).first()
+        assert that(div).is_a(Element)
+        assert that(div.attribute['id']).equals("nothiddendiv")
+
+@with_fixture("fixtures.html")
+def select_by_id_and_attribute_selector_and_quotes(context):
+    "selecting by id with quotes"
+    dom = DOM(context.html)
+
+    possibilities = [
+        "#nothiddendiv[id=\"nothiddendiv\"]",
+        "[id=\"nothiddendiv\"]#nothiddendiv",
     ]
     for selector in possibilities:
         div = dom.find(selector).first()
@@ -221,3 +250,20 @@ def select_by_attribute_contains(context):
             'something-python',
         ]
     )
+
+@with_fixture("lists.html")
+def select_by_attribute_contains_with_quotes(context):
+    "selecting attribute that contains certain value with quotes"
+    dom = DOM(context.html)
+
+    elements = dom.find("ul#packages > li[id|=\"python\"]")
+
+    assert that(elements).in_each("attribute['id']").matches(
+        [
+            'python-django',
+            'python-sponge',
+            'python-lettuce',
+            'something-python',
+        ]
+    )
+

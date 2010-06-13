@@ -52,7 +52,7 @@ class XPathTranslator(object):
         return sel
 
     def _translate_attrs(self, selector):
-        regex = re.compile(r'\[(\S+)=(\S+)\]')
+        regex = re.compile(r'\[(\S+)="?([^\s"]+)"?\]')
         sel = regex.sub("[@\g<1>='\g<2>']", selector)
         return sel
 
