@@ -205,3 +205,19 @@ def select_by_child_complex(context):
     )
     assert that(elements).in_each('tag').matches(['li', 'li'])
     assert that(elements).in_each("attribute['id']").matches(['ball', 'square'])
+
+@with_fixture("lists.html")
+def select_by_attribute_contains(context):
+    "selecting attribute that contains certain value"
+    dom = DOM(context.html)
+
+    elements = dom.find("ul#packages > li[id|=python]")
+
+    assert that(elements).in_each("attribute['id']").matches(
+        [
+            'python-django',
+            'python-sponge',
+            'python-lettuce',
+            'something-python',
+        ]
+    )

@@ -48,6 +48,7 @@ class XPathTranslator(object):
         sel = self._fix_bars(sel)
         sel = self._fix_attrs(sel)
         sel = self._fix_direct_childs(sel)
+        sel = self._fix_attr_contains(sel)
         return sel
 
     def _translate_attrs(self, selector):
@@ -80,6 +81,11 @@ class XPathTranslator(object):
 
     def _fix_direct_childs(self, selector):
         sel = selector.replace("//>//", "/")
+        return sel
+
+    def _fix_attr_contains(self, selector):
+        regex = re.compile(r"([@]\w+)[|]='(.*)'")
+        sel = regex.sub("contains(\g<1>, '\g<2>')", selector)
         return sel
 
     @property
