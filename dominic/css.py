@@ -55,7 +55,7 @@ class XPathTranslator(object):
         return sel
 
     def _translate_contains_word(self, selector):
-        regex = re.compile(r'\[([^\s~]+)[~]=(\S+)\]')
+        regex = re.compile(r'\[([^\s~]+)[~]="?([^\s"]+)"?\]')
         sel = regex.sub("[@\g<1>='\g<2>' or contains(@\g<1>, '\g<2> ') or contains(@\g<1>, ' \g<2>')]", selector)
         return sel
 

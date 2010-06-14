@@ -303,7 +303,6 @@ def select_by_attribute_contains_word(context):
     dom = DOM(context.html)
 
     elements = dom.find("ul#packages > li[id~=java]")
-
     assert that(elements).in_each("attribute['id']").matches(
         [
             'java',
@@ -313,3 +312,12 @@ def select_by_attribute_contains_word(context):
         ]
     )
 
+    elements = dom.find('ul#packages > li[id~="java"]')
+    assert that(elements).in_each("attribute['id']").matches(
+        [
+            'java',
+            'java island',
+            'coffee java',
+            'csharp java php',
+        ]
+    )
