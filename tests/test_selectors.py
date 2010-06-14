@@ -187,7 +187,7 @@ def select_by_class_and_attribute_selector_with_quotes(context):
 
 @with_fixture("fixtures.html")
 def select_by_id_and_attribute_selector(context):
-    "selecting by id"
+    "selecting by id and attribute selector"
     dom = DOM(context.html)
 
     possibilities = [
