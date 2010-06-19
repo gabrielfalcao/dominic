@@ -118,3 +118,68 @@ def last_returns_the_last(context):
     assert that(p.tag).equals("li")
     assert that(p.attribute['id']).equals("puppet")
     assert that(p.text()).equals("to care with")
+
+@with_fixture("divs.html")
+def attr_retrieves_attributes_as_dict(context):
+    "attr retrieves attributes as dict"
+    dom = DOM(context.html)
+
+    ul = dom.find("#objects").first()
+
+    assert that(ul.attr()).is_a(dict)
+    assert that(ul.attr()).equals(
+        {
+            'id': 'objects',
+            'class': 'list no-bullets'
+        }
+    )
+
+@with_fixture("divs.html")
+def attr_retrieves_each_attribute_by_name(context):
+    "attr retrieves attributes each attribute by name"
+    dom = DOM(context.html)
+
+    ul = dom.find("#objects").first()
+
+    assert that(ul.attr('id')).equals('objects')
+    assert that(ul.attr('class')).equals('list no-bullets')
+
+@with_fixture("divs.html")
+def attr_changes_a_attribute(context):
+    "attr retrieves attributes each attribute by name"
+    dom = DOM(context.html)
+
+    ul = dom.find("#objects").first()
+
+    ul.attr('id', 'list-of-stuff')
+
+    assert that(ul.attr('id')).equals('list-of-stuff')
+    assert that(ul.html()).looks_like(
+        '<ul class="list no-bullets" id="list-of-stuff">\n'
+        '  <li class="geometry" id="ball">to kick</li>\n'
+        '  <li id="dog">that barks</li>\n'
+        '  <li class="geometry" id="square">that shapes</li>\n'
+        '  <li class="stuff thing" id="house">for people</li>\n'
+        '  <li id="puppet">to care with</li>\n'
+        '</ul>'
+    )
+
+@with_fixture("divs.html")
+def remove_attr_removes_attr(context):
+    "remove_attr removes a attr"
+    dom = DOM(context.html)
+
+    ul = dom.find("#objects").first()
+
+    ul.remove_attr('class')
+    assert that(ul.attr('class')).equals(None)
+    assert that(ul.html()).looks_like(
+        '<ul id="objects">\n'
+        '  <li class="geometry" id="ball">to kick</li>\n'
+        '  <li id="dog">that barks</li>\n'
+        '  <li class="geometry" id="square">that shapes</li>\n'
+        '  <li class="stuff thing" id="house">for people</li>\n'
+        '  <li id="puppet">to care with</li>\n'
+        '</ul>'
+    )
+

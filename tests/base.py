@@ -33,4 +33,3 @@ def with_fixture(template):
         fobj.close()
 
     return that_with_context(set_html)
-

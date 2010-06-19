@@ -52,6 +52,10 @@ class BaseHandler(object):
 
         return self._get_element_text()
 
+    @property
+    def attribute(self):
+        return self._fetch_attributes(self.element)
+
     def html(self, new=None):
         if isinstance(new, basestring):
             while self.element.childNodes:
@@ -63,6 +67,17 @@ class BaseHandler(object):
             self.element = node
 
         return self.element.toxml()
+
+    def attr(self, key=None, value=None):
+        if key is None and value is None:
+            return dict(self.attribute)
+        elif not value:
+            return self.attribute.get(key)
+
+        self.element.setAttribute(key, value)
+
+    def remove_attr(self, attr):
+        self.element.removeAttribute(attr)
 
     def _fetch_attributes(self, element):
         keys = element.attributes.keys()
@@ -85,7 +100,6 @@ class ElementSet(list):
 class Element(BaseHandler):
     def __init__(self, element):
         self.element = element
-        self.attribute = self._fetch_attributes(element)
         self.tag = element.tagName
 
 class DOM(BaseHandler):
