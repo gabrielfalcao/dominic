@@ -30,7 +30,11 @@ import xpath
 from xml.dom import minidom
 from dominic.css import XPathTranslator
 
-class BaseHandler(object):
+class Element(object):
+    def __init__(self, element):
+        self.element = element
+        self.tag = element.tagName
+
     def xpath(self, path):
         finder = xpath.XPath(path)
         return ElementSet(finder.find(self.element))
@@ -69,12 +73,14 @@ class BaseHandler(object):
         return self.element.toxml()
 
     def attr(self, key=None, value=None):
-        if key is None and value is None:
-            return dict(self.attribute)
-        elif not value:
+        if key and value:
+            self.element.setAttribute(key, value)
+            return
+
+        if key and not value:
             return self.attribute.get(key)
 
-        self.element.setAttribute(key, value)
+        return self.attribute.copy()
 
     def remove_attr(self, attr):
         self.element.removeAttribute(attr)
@@ -97,12 +103,7 @@ class ElementSet(list):
     def length(self):
         return len(self)
 
-class Element(BaseHandler):
-    def __init__(self, element):
-        self.element = element
-        self.tag = element.tagName
-
-class DOM(BaseHandler):
+class DOM(Element):
     def __init__(self, raw):
         self.raw = raw
         self.document = minidom.parseString(raw)
