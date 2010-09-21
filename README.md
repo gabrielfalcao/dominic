@@ -101,6 +101,19 @@ python-pure implementation of CSS selectors, and DOM traversing
     assert good.text() == 'sparks'
     assert bad.text() == 'that has no light'
 
+    links = DOM("""
+        <a href="example.html" hreflang="en">American English</a>
+        <a href="example.html" hreflang="en-UK">British English</a>
+        <a href="example.html" hreflang="pt-BR">Brazilian Portuguese</a>
+    """)
+
+    found = links.find("a[hreflang|=en]")
+
+    assert len(found) is 2
+
+    assert found[0].text() == 'American English'
+    assert found[1].text() == 'British English'
+
 ## also works with quoted attribute values
 
     lists_html = """<html>

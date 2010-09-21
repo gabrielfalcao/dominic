@@ -39,6 +39,7 @@ class XPathTranslator(object):
     def do_translations(self, sel):
         sel = self._translate_contains_word(sel)
         sel = self._translate_endswith(sel)
+        sel = self._translate_contains_prefix(sel)
         sel = self._translate_attrs(sel)
         sel = self._translate_ids(sel)
         sel = self._translate_classes(sel)
@@ -61,8 +62,13 @@ class XPathTranslator(object):
         return sel
 
     def _translate_endswith(self, selector):
-        regex = re.compile(r'\[([^\s~]+)[$]="?([^\s"]+)"?\]')
+        regex = re.compile(r'\[([^\s$]+)[$]="?([^\s"]+)"?\]')
         sel = regex.sub("[ends-with(@\g<1>, '\g<2>')]", selector)
+        return sel
+
+    def _translate_contains_prefix(self, selector):
+        regex = re.compile(r'\[([^\s|]+)[|]="?([^\s"]+)"?\]')
+        sel = regex.sub("[starts-with(@\g<1>, '\g<2>-')]", selector)
         return sel
 
     def _translate_attrs(self, selector):

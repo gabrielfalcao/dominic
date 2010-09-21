@@ -240,7 +240,7 @@ def select_by_attribute_startswith(context):
     "selecting attribute that startswith certain value"
     dom = DOM(context.html)
 
-    elements = dom.find("ul#packages > li[id^=python]")
+    elements = dom.find("ul#packages > li[id^=pyt]")
 
     assert that(elements).in_each("attribute['id']").matches(
         [
@@ -255,7 +255,7 @@ def select_by_attribute_startswith_with_quotes(context):
     "selecting attribute that startswith certain value with quotes"
     dom = DOM(context.html)
 
-    elements = dom.find("ul#packages > li[id^=\"python\"]")
+    elements = dom.find("ul#packages > li[id^=\"pyt\"]")
 
     assert that(elements).in_each("attribute['id']").matches(
         [
@@ -346,3 +346,35 @@ def select_by_attribute_ends_with_with_quotes(context):
         ]
     )
 
+@with_fixture("lists.html")
+def select_by_attribute_contains_prefix(context):
+    "selecting attribute that contains_prefix certain value"
+    dom = DOM(context.html)
+
+    elements = dom.find("ul#packages > li[id|=python]")
+
+    assert that(elements).in_each("attribute['id']").matches(
+        [
+            'python-django',
+            'python-sponge',
+            'python-lettuce',
+        ]
+    )
+
+    found = dom.find("ul#packages > li[id|=java]")
+    assert not found
+
+@with_fixture("lists.html")
+def select_by_attribute_contains_prefix_with_quotes(context):
+    "selecting attribute that contains_prefix certain value with quotes"
+    dom = DOM(context.html)
+
+    elements = dom.find("ul#packages > li[id|=\"python\"]")
+
+    assert that(elements).in_each("attribute['id']").matches(
+        [
+            'python-django',
+            'python-sponge',
+            'python-lettuce',
+        ]
+    )
