@@ -240,7 +240,7 @@ def select_by_attribute_startswith(context):
     "selecting attribute that startswith certain value"
     dom = DOM(context.html)
 
-    elements = dom.find("ul#packages > li[id|=python]")
+    elements = dom.find("ul#packages > li[id^=python]")
 
     assert that(elements).in_each("attribute['id']").matches(
         [
@@ -255,7 +255,7 @@ def select_by_attribute_startswith_with_quotes(context):
     "selecting attribute that startswith certain value with quotes"
     dom = DOM(context.html)
 
-    elements = dom.find("ul#packages > li[id|=\"python\"]")
+    elements = dom.find("ul#packages > li[id^=\"python\"]")
 
     assert that(elements).in_each("attribute['id']").matches(
         [
@@ -321,3 +321,28 @@ def select_by_attribute_contains_word(context):
             'csharp java php',
         ]
     )
+
+@with_fixture("lists.html")
+def select_by_attribute_ends_with(context):
+    "selecting attribute that ends with certain value"
+    dom = DOM(context.html)
+
+    elements = dom.find("ul#packages > li[id$=nd]")
+    assert that(elements).in_each("attribute['id']").matches(
+        [
+            'java island',
+        ]
+    )
+
+@with_fixture("lists.html")
+def select_by_attribute_ends_with_with_quotes(context):
+    "selecting attribute that ends with certain value with quotes"
+    dom = DOM(context.html)
+
+    elements = dom.find("ul#packages > li[id$=\"nd\"]")
+    assert that(elements).in_each("attribute['id']").matches(
+        [
+            'java island',
+        ]
+    )
+

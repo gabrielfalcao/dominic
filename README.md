@@ -85,7 +85,7 @@ python-pure implementation of CSS selectors, and DOM traversing
 
     lists_dom = DOM(lists_html)
 
-    ball, star = lists_dom.find("ul > [id|=nice]")
+    ball, star = lists_dom.find("ul > [id^=nice]")
 
     assert ball.text() == 'kicks'
     assert star.text() == 'sparks'
@@ -95,6 +95,11 @@ python-pure implementation of CSS selectors, and DOM traversing
     assert ball.text() == 'kicks'
     assert star.text() == 'sparks'
     assert moon.text() == 'so beautiful'
+
+    good, bad = lists_dom.find("ul > [id$=star]")
+
+    assert good.text() == 'sparks'
+    assert bad.text() == 'that has no light'
 
 ## also works with quoted attribute values
 
@@ -117,7 +122,7 @@ python-pure implementation of CSS selectors, and DOM traversing
 
     lists_dom = DOM(lists_html)
 
-    ball, star = lists_dom.find('ul > [id|="nice"]')
+    ball, star = lists_dom.find('ul > [id^="nice"]')
 
     assert ball.text() == 'kicks'
     assert star.text() == 'sparks'
