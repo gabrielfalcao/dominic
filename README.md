@@ -222,10 +222,10 @@ project, and ran within your sandbox. It can also be put together with
 
 ## py-dom-xpath
 
-dominic includes a modified fork of py-dom-xpath which includes more
-test coverage and more features than the original project. This fork
-will be maintained as long as those contributions are not accepted and
-commited py-dom-xpath in mainstream codebase.
+    dominic includes a modified fork of py-dom-xpath which includes more
+    test coverage and more features than the original project. This fork
+    will be maintained as long as those contributions are not accepted and
+    commited py-dom-xpath in mainstream codebase.
 
-py-dom-xpath is also under MIT License, and the original codebase can
-be found [here](http://code.google.com/p/py-dom-xpath/)
+**py-dom-xpath is also under MIT License**, and its original codebase
+  is located [here](http://code.google.com/p/py-dom-xpath/)
