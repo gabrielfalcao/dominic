@@ -26,8 +26,8 @@
 
 version = '0.1.3-unreleased'
 
-import xpath
 from xml.dom import minidom
+from dominic import xpath
 from dominic.css import XPathTranslator
 
 class Element(object):

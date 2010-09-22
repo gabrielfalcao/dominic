@@ -217,3 +217,15 @@ project, and ran within your sandbox. It can also be put together with
     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
     OTHER DEALINGS IN THE SOFTWARE.
+
+# 3rd party libraries disclaimer
+
+## py-dom-xpath
+
+dominic includes a modified fork of py-dom-xpath which includes more
+test coverage and more features than the original project. This fork
+will be maintained as long as those contributions are not accepted and
+commited py-dom-xpath in mainstream codebase.
+
+py-dom-xpath is also under MIT License, and the original codebase can
+be found [here](http://code.google.com/p/py-dom-xpath/)

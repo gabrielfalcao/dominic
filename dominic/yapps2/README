@@ -1,0 +1,9 @@
+Yapps 2 is by Amil Patel <amitp@cs.stanford.edu>.
+
+The official Yapps 2 distribution is available from:
+http://theory.stanford.edu/~amitp/yapps/
+
+A version of Yapps 2 is included in this distribution, to avoid
+introducing an external dependency.  This version of Yapps 2 has been
+modified to add a "no-support-module" parser option, which suppresses
+inclusion of the "from yappsrt include *" line in the generated parser.

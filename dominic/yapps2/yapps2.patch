@@ -1,0 +1,24 @@
+diff -u yapps2.orig/yapps2.py yapps2/yapps2.py
+--- yapps2.orig/yapps2.py	2003-08-03 10:11:45.000000000 -0700
++++ yapps2/yapps2.py	2009-02-05 15:36:54.000000000 -0800
+@@ -166,7 +166,8 @@
+         # TODO: remove "import *" construct
+         self.write("from string import *\n")
+         self.write("import re\n")
+-        self.write("from yappsrt import *\n")
++        if not self['no-support-module']:
++            self.write("from yappsrt import *\n")
+ 	self.write("\n")
+ 	self.write("class ", self.name, "Scanner(Scanner):\n")
+         self.write("    patterns = [\n")
+@@ -709,7 +710,9 @@
+ 
+ yapps_options = [
+     ('context-insensitive-scanner', 'context-insensitive-scanner',
+-     'Scan all tokens (see docs)')
++     'Scan all tokens (see docs)'),
++    ('no-support-module', 'no-support-module',
++     'Do not include the support module')
+     ]
+ 
+ def generate(inputfilename, outputfilename='', dump=0, **flags):
