@@ -38,6 +38,18 @@ class TestAPI(unittest.TestCase):
 
         self.failIfEqual(trace1, trace2)
 
+    def test_context_clonning(self):
+        "XPathContext.clone carbon copies default_namespace, namespaces and variables"
+        cloned = self.context.clone()
+        assert cloned is not self.context
+        self.failUnlessEqual(cloned.__class__, self.context.__class__)
+        self.failUnlessEqual(
+            cloned.default_namespace,
+            self.context.default_namespace
+        )
+        self.failUnlessEqual(cloned.namespaces, self.context.namespaces)
+        self.failUnlessEqual(cloned.variables, self.context.variables)
+
     def multitest(self, expr, **kwargs):
         functions = ['find', 'findnode', 'findvalue', 'findvalues']
         results = {}

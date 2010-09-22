@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
+import dominic
 import unittest
-import xml.dom.minidom
 from dominic import xpath
 
 class TestRepr(unittest.TestCase):
