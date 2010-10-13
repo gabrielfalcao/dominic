@@ -27,8 +27,29 @@
 version = '0.1.3-unreleased'
 
 from xml.dom import minidom
+from xml.sax import make_parser
+from xml.sax.handler import ErrorHandler
+
 from dominic import xpath
 from dominic.css import XPathTranslator
+
+class FaultTolerantErrorHandler(ErrorHandler):
+    def error(self, exception):
+        pass
+    def fatalError(self, exception):
+        pass
+    def warning(self, exception):
+        pass
+
+def string_to_minidom(string):
+    try:
+        dom = minidom.parseString(string)
+    except:
+        faulty = make_parser()
+        faulty.setErrorHandler(FaultTolerantErrorHandler())
+        dom = minidom.parseString(string, parser=faulty)
+
+    return dom
 
 class Element(object):
     def __init__(self, element):
@@ -65,7 +86,7 @@ class Element(object):
             while self.element.childNodes:
                 self.element.childNodes.pop()
 
-            html = minidom.parseString(new)
+            html = string_to_minidom(new)
             node = html.childNodes[0]
             self.element.parentNode.replaceChild(node, self.element)
             self.element = node
@@ -106,5 +127,5 @@ class ElementSet(list):
 class DOM(Element):
     def __init__(self, raw):
         self.raw = raw
-        self.document = minidom.parseString(raw)
+        self.document = string_to_minidom(raw)
         self.element = self.document.childNodes[0]

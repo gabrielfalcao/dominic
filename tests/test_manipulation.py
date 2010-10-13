@@ -183,3 +183,9 @@ def remove_attr_removes_attr(context):
         '</ul>'
     )
 
+@with_fixture("faulty.html")
+def error_tolerance_for_non_well_formed_html(context):
+    "DOM(html) ignores a non-well-formed HTML"
+    parsed = DOM(context.html)
+
+    assert that(parsed).is_a(DOM)
