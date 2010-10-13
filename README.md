@@ -1,5 +1,5 @@
 # dominic
-> Version 0.1 (unreleased)
+> Version 0.1.4 (unreleased)
 
 # What
 
@@ -167,6 +167,8 @@ So that, when I've met
 [py-dom-xpath](http://code.google.com/p/py-dom-xpath/), I decided to
 write my own python implementation of CSSSelector, which translates
 into xpath paths.
+
+Humm, BTW it supports non well-formed HTML :)
 
 # Inspiration and thanks
 

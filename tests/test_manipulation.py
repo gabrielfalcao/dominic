@@ -187,5 +187,18 @@ def remove_attr_removes_attr(context):
 def error_tolerance_for_non_well_formed_html(context):
     "DOM(html) ignores a non-well-formed HTML"
     parsed = DOM(context.html)
-
     assert that(parsed).is_a(DOM)
+
+    head = parsed.find("head title").first()
+    assert that(head.text()).equals(u"Gabriel Falcão's page")
+
+    a, div, p = parsed.find("body *")
+
+    assert that(a.text()).equals("My Profile")
+    assert that(a.attr("href")).equals("http://github.com/gabrielfalcao")
+
+    assert that(div.text()).looks_like("")
+    assert that(div.attr("id")).equals("test")
+
+    assert that(p.text()).equals("Paragraph")
+
